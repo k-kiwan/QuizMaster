@@ -93,17 +93,26 @@ public class Quiz : MonoBehaviour
 
     public void NextQuestionButton()
     {
-        if(questions.Count > 0)
-        {
-            GetNextQuestion();
-            scoreKeeper.IncrementQuestionsSkipped();
-        }
-        else 
-        {
-            scoreKeeper.IncrementQuestionsSkipped();
-            isComplete = true;
-            return;
-        }
+        
+            if(questions.Count > 0)
+            {   
+                if (hasAnsweredEarly == true) 
+                {
+                    GetNextQuestion();
+                    scoreKeeper.DecrementQuestionsSeen();
+                } 
+                else 
+                {
+                    GetNextQuestion();
+                    scoreKeeper.IncrementQuestionsSkipped();
+                }       
+            }
+            else 
+            {
+                scoreKeeper.IncrementQuestionsSkipped();
+                isComplete = true;
+                return;
+            }
     }
 
     public void GetNextQuestion()
